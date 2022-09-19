@@ -23,14 +23,11 @@ const getUser = (req, res, next) => {
 
 const changeUserData = (req, res, next) => {
   const { email, name } = req.body;
-  User.findByIdAndUpdate(req.user._id, { email, name }, { new: true, runValidators: true })
-    .then((user) => {
-      if (!user) {
-        next(new NotFoundError('Пользователь по указанному _id не найден'));
-      } else {
-        res.send(user);
-      }
+  User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
+    .orFail(() => {
+      throw new NotFoundError('Пользователь по указанному _id не найден');
     })
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('переданы некоректные данные'));
