@@ -38,6 +38,14 @@ const movieSchema = new mongoose.Schema({
       message: 'Некорректный адрес URL',
     },
   },
+  nameRU: {
+    type: String,
+    required: true,
+  },
+  nameEN: {
+    type: String,
+    required: true,
+  },
   thumbnail: {
     type: String,
     required: true,
@@ -53,14 +61,6 @@ const movieSchema = new mongoose.Schema({
   },
   movieId: {
     type: Number,
-    required: true,
-  },
-  nameRU: {
-    type: String,
-    required: true,
-  },
-  nameEN: {
-    type: String,
     required: true,
   },
 });
