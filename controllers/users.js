@@ -52,7 +52,7 @@ const postUser = (req, res, next) => {
       email,
       password: hash,
     }))
-    .then((user) => res.status(201).send({ data: user.email }))
+    .then((user) => res.status(201).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('переданы некоректные данные'));
@@ -72,7 +72,7 @@ const login = (req, res, next) => {
       if (!user) {
         next(new AuthorizationError('неправильный email или password'));
       }
-      return generateToken({ email: user.email });
+      return generateToken({ _id: user._id });
     })
     .then((token) => {
       res.send({ token });
